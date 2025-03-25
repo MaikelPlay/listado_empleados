@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Ejercicio 3</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Función pedirEmpleados()
+    async function pedirEmpleados() {
+      
+      const departamento = document.getElementById('lstDepartamentos').value;
+      
+      
+      const dataToSend = {
+        action: "empleados",
+        data: {
+          departamento: departamento
+        }
+      };
+
+      let formData = new FormData();
+      formData.append("order", JSON.stringify(dataToSend));
+      
+      try {
+        
+        const response = await fetch('controller.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+
+        if (result.success === "false") {
+          alert(result.message);
+        }
+    
+        else if (result.success === "true") {
+          result.employees.forEach(employee => {
+            console.log("--EMPLEADO--");
+			console.log("empID: " + employee.empID);
+            console.log("Empleado: " + employee.name);
+            console.log("E-mail: " + employee.email);
+          });
+        }
+      } catch (error) {
+       
+        console.log("Error: " + error);
+      }
+    }
+
+    // Función main()
+    function main() {
+      document.getElementById('btnObtener').addEventListener('click', pedirEmpleados);
+    }
+
+    // Tras cargarse el DOM, ejecutar main()
+    window.addEventListener('load', main);
+  </script>
+</head>
+<body>
+  <div class="contenedor">
+    <h2>Listar empleados</h2>
+    <div class="campo">
+      <label for="lstDepartamentos">Departamentos: </label>
+      <select id="lstDepartamentos">
+        <option value="personal">Personal</option>
+        <option value="otros">Otros</option>
+      </select>
+    </div>
+    <button type="button" id="btnObtener">Obtener empleados</button>
+  </div>	
+</body>
+</html>

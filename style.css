@@ -1,0 +1,23 @@
+* {
+	box-sizing: border-box;
+	*margin: 0;
+	padding: 0;
+}
+.contenedor {
+	width: 400px;
+	margin: 40px auto;
+}
+h2 {
+	margin-bottom: 30px;
+}
+.campo {
+	margin-bottom: 20px;
+}
+label {
+	display: inline-block;
+	margin-bottom: 4px;
+}
+#btnObtener {
+	margin-top: 20px;
+	padding: 5px;
+}
